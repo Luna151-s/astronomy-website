@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AstroHub - Educational Astronomy & Celestial Database</title>
+  <style>
+    :root {
+      --bg: #0b0d17;
+      --card-bg: #15192b;
+      --accent: #7c5cff;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      background: rgba(11, 13, 23, 0.9);
+      border-bottom: 1px solid #232946;
+      padding: 1.2rem 2rem;
+      position: sticky; top: 0; z-index: 10;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    header h1 { font-size: 1.5rem; color: #fff; letter-spacing: 1px; }
+    nav a { color: var(--muted); text-decoration: none; margin-left: 1.5rem; font-weight: 500; }
+    nav a:hover { color: var(--accent); }
+    
+    main { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+    section { margin-bottom: 3.5rem; }
+    h2 { font-size: 1.8rem; margin-bottom: 1rem; color: #fff; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 0.3rem; }
+    
+    /* APOD Section */
+    .apod-container {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    @media(max-width: 768px) { .apod-container { grid-template-columns: 1fr; } }
+    .apod-img img { width: 100%; height: 100%; object-fit: cover; min-height: 300px; }
+    .apod-info { padding: 1.5rem; }
+    .apod-info h3 { margin-bottom: 0.5rem; color: #fff; }
+    .apod-date { color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem; }
+
+    /* Database Cards Grid */
+    .search-box {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #232946;
+      background: var(--card-bg);
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+    .db-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 1.2rem;
+      border: 1px solid #232946;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .db-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .db-card h3 { color: #fff; font-size: 1.2rem; margin-bottom: 0.4rem; }
+    .db-card p { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.3rem; }
+
+    /* Blog List */
+    .blog-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #232946;
+    }
+    .blog-card h3 { color: #fff; margin-bottom: 0.5rem; }
+    .blog-meta { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌌 AstroHub</h1>
+    <nav>
+      <a href="#apod">Daily Photo</a>
+      <a href="#database">Encyclopedia</a>
+      <a href="#blog">Educational Blog</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- NASA APOD Section -->
+    <section id="apod">
+      <h2>NASA Picture of the Day</h2>
+      <div class="apod-container">
+        <div class="apod-img" id="apod-img-box">
+          <p style="padding:2rem; text-align:center;">Loading NASA APOD...</p>
+        </div>
+        <div class="apod-info">
+          <h3 id="apod-title">Fetching astronomical data...</h3>
+          <div class="apod-date" id="apod-date"></div>
+          <p id="apod-desc"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Celestial Database Section -->
+    <section id="database">
+      <h2>Solar System Encyclopedia</h2>
+      <input type="text" id="search" class="search-box" placeholder="Search celestial bodies (e.g., Mars, Jupiter, Moon)..." oninput="filterBodies()" />
+      <div class="grid" id="db-grid">
+        <p>Loading Solar System objects...</p>
+      </div>
+    </section>
+
+    <!-- Educational Blog Section -->
+    <section id="blog">
+      <h2>Educational Articles</h2>
+      
+      <article class="blog-card">
+        <h3>Understanding Exoplanets: How We Find Planets Beyond Our Solar System</h3>
+        <div class="blog-meta">Published: August 2026 | Category: Planetary Science</div>
+        <p>Astronomers discover new worlds around far-off stars primarily using two techniques: the Transit Method (measuring dimming starlight) and Radial Velocity (detecting stellar wobbles). Learn how space telescopes like Kepler and JWST changed our view of the universe...</p>
+      </article>
+
+      <article class="blog-card">
+        <h3>Beginner’s Guide to Stargazing Equipment</h3>
+        <div class="blog-meta">Published: July 2026 | Category: Amateur Astronomy</div>
+        <p>Before purchasing an expensive telescope, start with a good pair of 7x50 or 10x50 binoculars. They offer a wide field of view and make learning constellations and dark-sky navigation significantly easier...</p>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    // Fetch NASA APOD
+    async function loadAPOD() {
+      try {
+        const res = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY');
+        const data = await res.json();
+        
+        document.getElementById('apod-title').innerText = data.title;
+        document.getElementById('apod-date').innerText = `Date: ${data.date}`;
+        document.getElementById('apod-desc').innerText = data.explanation;
+        
+        if(data.media_type === 'image') {
+          document.getElementById('apod-img-box').innerHTML = `<img src="${data.url}" alt="${data.title}">`;
+        } else {
+          document.getElementById('apod-img-box').innerHTML = `<iframe src="${data.url}" style="width:100%;height:100%;border:none;"></iframe>`;
+        }
+      } catch (err) {
+        document.getElementById('apod-title').innerText = "Unable to load NASA APOD";
+      }
+    }
+
+    // Fetch Solar System Database
+    let celestialBodies = [];
+    async function loadDatabase() {
+      try {
+        const res = await fetch('https://api.le-systeme-solaire.net/rest/bodies/');
+        const data = await res.json();
+        // Filter primary planets & moons
+        celestialBodies = data.bodies.filter(b => b.isPlanet || b.bodyType === 'Moon' || b.bodyType === 'Dwarf Planet');
+        renderBodies(celestialBodies.slice(0, 16));
+      } catch (err) {
+        document.getElementById('db-grid').innerHTML = "<p>Error loading database data.</p>";
+      }
+    }
+
+    function renderBodies(list) {
+      const grid = document.getElementById('db-grid');
+      grid.innerHTML = list.map(b => `
+        <div class="db-card">
+          <h3>${b.englishName}</h3>
+          <p><strong>Type:</strong> ${b.bodyType || 'Celestial Body'}</p>
+          <p><strong>Gravity:</strong> ${b.gravity ? b.gravity + ' m/s²' : 'N/A'}</p>
+          <p><strong>Avg Temp:</strong> ${b.avgTemp ? (b.avgTemp - 273.15).toFixed(0) + ' °C' : 'N/A'}</p>
+          <p><strong>Discovered:</strong> ${b.discoveryDate || 'Ancient Times'}</p>
+        </div>
+      `).join('');
+    }
+
+    function filterBodies() {
+      const q = document.getElementById('search').value.toLowerCase();
+      const filtered = celestialBodies.filter(b => b.englishName.toLowerCase().includes(q));
+      renderBodies(filtered.slice(0, 16));
+    }
+
+    loadAPOD();
+    loadDatabase();
+  </script>
+</body>
+</html>
